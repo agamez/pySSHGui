@@ -20,6 +20,7 @@ class PySSHGui(QMainWindow, pySSHGui_ui.Ui_MainWindow):
 			self.hostRadioButtons.append(QRadioButton(self.centralwidget))
 			self.hostRadioButtons[-1].setObjectName(host["Host"])
 			self.hostRadioButtons[-1].setText(host["Host"])
+			self.hostRadioButtons[-1]._associated_ssh_host = host
 			self.hostsLayout.addWidget(self.hostRadioButtons[-1])
 
 
@@ -31,6 +32,12 @@ class PySSHGui(QMainWindow, pySSHGui_ui.Ui_MainWindow):
 
 	def on_removeButton_clicked(self, b):
 		print "Clicked remove button"
+		for button in self.hostRadioButtons:
+			if button.isChecked():
+				self.ssh_config.hosts.remove(button._associated_ssh_host)
+				self.hostsLayout.removeWidget(button)
+				self.hostRadioButtons.remove(button)
+				button.setParent(None)
 
 	def on_connectButton_clicked(self, b):
 		print "Clicked connect button"
