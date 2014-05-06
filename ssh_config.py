@@ -35,7 +35,7 @@ class SSH_Config:
 		return hosts
 
 	def __init__(self, file="~/.ssh/config"):
-		self.fd = self.open_or_create_file(file)
+		self.fd = self.open_or_create_file(os.path.expanduser(file))
 		ssh_config_content = map(str.strip, self.fd.readlines())
 		self.hosts = self.split_ssh_config_content(ssh_config_content)
 	
