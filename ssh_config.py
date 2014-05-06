@@ -3,16 +3,6 @@ import os
 
 class SSH_Config:
 	@staticmethod
-	def open_or_create_file(file):
-		directory = os.path.dirname(file)
-		if not os.path.exists(directory):
-			os.makedirs(directory)
-		try:
-			return open(file, "rw")
-		except:
-			return open(file, "w+")
-
-	@staticmethod
 	def split_ssh_config_content(ssh_config_content):
 		hosts = list()
 		host = None
@@ -35,11 +25,33 @@ class SSH_Config:
 
 		return hosts
 
+	def save(self):
+		directory = os.path.dirname(file)
+		if not os.path.exists(directory):
+			os.makedirs(directory)
+
+		fd = open(os.path.expanduser(self.file), "w")
+		for host in self.hosts:
+			copied_host = host.copy()
+			fd.write("Host %s\n" % copied_host["Host"])
+			del(copied_host["Host"])
+			for key in copied_host:
+				fd.write("\t%s %s\n" % (key, copied_host[key]))
+			fd.write("\n")
+		fd.close()
+
 	def __init__(self, file="~/.ssh/config"):
-		self.fd = self.open_or_create_file(os.path.expanduser(file))
-		ssh_config_content = map(str.strip, self.fd.readlines())
+		self.file=file
+		try:
+			fd = open(os.path.expanduser(self.file), "rw")
+			file_contents = fd.readlines()
+			fd.close
+		except:
+			file_contents=None
+
+		ssh_config_content = map(str.strip, file_contents)
 		self.hosts = self.split_ssh_config_content(ssh_config_content)
-	
+
 	def __str__(self):
 		return str(self.hosts)
 
