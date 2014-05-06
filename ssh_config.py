@@ -30,7 +30,8 @@ class SSH_Config:
 				if host:
 					hosts.append(host)
 					host = None
-		hosts.append(host)
+		if host:
+			hosts.append(host)
 
 		return hosts
 
