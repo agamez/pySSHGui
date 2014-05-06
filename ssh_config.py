@@ -26,7 +26,7 @@ class SSH_Config:
 		return hosts
 
 	def save(self):
-		directory = os.path.dirname(file)
+		directory = os.path.dirname(self.file)
 		if not os.path.exists(directory):
 			os.makedirs(directory)
 

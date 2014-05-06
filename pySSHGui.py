@@ -38,6 +38,7 @@ class PySSHGui(QMainWindow, pySSHGui_ui.Ui_MainWindow):
 				self.hostsLayout.removeWidget(button)
 				self.hostRadioButtons.remove(button)
 				button.setParent(None)
+		self.ssh_config.save()
 
 	def on_connectButton_clicked(self, b):
 		print "Clicked connect button"
