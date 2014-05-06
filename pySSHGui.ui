@@ -15,11 +15,11 @@
    <string>pySSHGui</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
+   <layout class="QVBoxLayout" name="gridLayout">
+    <item>
      <layout class="QVBoxLayout" name="buttonsLayout">
       <item>
-       <layout class="QGridLayout" name="hostsLayout"/>
+       <layout class="QVBoxLayout" name="hostsLayout"/>
       </item>
       <item>
        <spacer name="verticalSpacer">
