@@ -13,6 +13,16 @@ class PySSHGui(QMainWindow, pySSHGui_ui.Ui_MainWindow):
 		self.setupUi(self)
 		self.ssh_config = ssh_config
 
+		self.hostRadioButtons = list()
+		for host in self.ssh_config.hosts:
+			print host
+
+			self.hostRadioButtons.append(QRadioButton(self.centralwidget))
+			self.hostRadioButtons[-1].setObjectName(host["Host"])
+			self.hostRadioButtons[-1].setText(host["Host"])
+			self.hostsLayout.addWidget(self.hostRadioButtons[-1])
+
+
 	def on_newButton_clicked(self, b):
 		print "Clicked new button"
 
