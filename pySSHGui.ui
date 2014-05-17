@@ -15,8 +15,8 @@
    <string>pySSHGui</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="gridLayout">
-    <item>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
      <layout class="QVBoxLayout" name="buttonsLayout">
       <item>
        <layout class="QVBoxLayout" name="hostsLayout"/>
