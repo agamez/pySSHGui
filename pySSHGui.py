@@ -5,7 +5,7 @@ import pySSHGui_ui
 from ssh_config import SSH_Config
 
 import sys
-
+import os
 
 class PySSHGui(QMainWindow, pySSHGui_ui.Ui_MainWindow):
 	def __init__(self, ssh_config):
@@ -42,6 +42,11 @@ class PySSHGui(QMainWindow, pySSHGui_ui.Ui_MainWindow):
 
 	def on_connectButton_clicked(self, b):
 		print "Clicked connect button"
+		for button in self.hostRadioButtons:
+			if button.isChecked():
+				ssh_command = "x-terminal-emulator -e ssh %s" % button._associated_ssh_host["Host"]
+				os.system(ssh_command)
+				break
 
 
 if __name__ == "__main__":
