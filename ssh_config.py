@@ -41,9 +41,9 @@ class SSH_Config:
 		fd.close()
 
 	def __init__(self, file="~/.ssh/config"):
-		self.file=file
+		self.file=os.path.expanduser(file)
 		try:
-			fd = open(os.path.expanduser(self.file), "rw")
+			fd = open(self.file, "rw")
 			file_contents = fd.readlines()
 			fd.close
 		except:
