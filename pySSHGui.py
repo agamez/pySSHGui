@@ -44,7 +44,8 @@ class PySSHGui(QMainWindow, pySSHGui_ui.Ui_MainWindow):
 		print "Clicked connect button"
 		for button in self.hostRadioButtons:
 			if button.isChecked():
-				ssh_command = "x-terminal-emulator -e ssh %s" % button._associated_ssh_host["Host"]
+				#ssh_command = "x-terminal-emulator -e ssh %s" % button._associated_ssh_host["Host"]
+				ssh_command = 'osso-xterm -e "ssh %s"' % button._associated_ssh_host["Host"]
 				os.system(ssh_command)
 				break
 
