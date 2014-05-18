@@ -52,3 +52,5 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
+# This isn't standard, but I'll be calling this way .py files created by pyuic4
+*_ui.py
