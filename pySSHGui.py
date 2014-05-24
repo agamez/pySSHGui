@@ -48,6 +48,27 @@ class PySSHGui(QMainWindow, pySSHGui_ui.Ui_MainWindow):
 		print "Clicked new button"
 
 	def on_editButton_clicked(self, b):
+		editHost = QDialog()
+		ui = editHost_ui.Ui_editHost()
+		ui.setupUi(editHost)
+		editHost.setWindowTitle('Edit host')
+		for button in self.hostRadioButtons:
+			if button.isChecked():
+				ui.Name.setText(button._associated_ssh_host['Host'])
+				ui.HostName.setText(button._associated_ssh_host['HostName'])
+				ui.User.setText(button._associated_ssh_host['User'])
+				ui.Port.setText(button._associated_ssh_host['Port'])
+				ui.IdentityFile.setText(button._associated_ssh_host['IdentityFile'])
+				break
+
+		if editHost.exec_():
+			button._associated_ssh_host['Host'] = str(ui.Name.text())
+			button._associated_ssh_host['HostName'] = str(ui.HostName.text())
+			button._associated_ssh_host['User'] = str(ui.User.text())
+			button._associated_ssh_host['Port'] = str(ui.Port.text())
+			button._associated_ssh_host['IdentityFile'] = str(ui.IdentityFile.text())
+			button.setText(button._associated_ssh_host['Host'])
+		self.ssh_config.save()
 		print "Clicked edit button"
 
 	def on_removeButton_clicked(self, b):
