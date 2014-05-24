@@ -27,6 +27,11 @@ class PySSHGui(QMainWindow, pySSHGui_ui.Ui_MainWindow):
 		self.hostRadioButtons[-1]._associated_ssh_host = host
 		self.hostsLayout.addWidget(self.hostRadioButtons[-1])
 
+	def get_checkedButton(self):
+		for button in self.hostRadioButtons:
+			if button.isChecked():
+				return button
+		return None
 
 	def on_newButton_clicked(self, b):
 		editHost = QDialog()
@@ -52,14 +57,14 @@ class PySSHGui(QMainWindow, pySSHGui_ui.Ui_MainWindow):
 		ui = editHost_ui.Ui_editHost()
 		ui.setupUi(editHost)
 		editHost.setWindowTitle('Edit host')
-		for button in self.hostRadioButtons:
-			if button.isChecked():
-				ui.Name.setText(button._associated_ssh_host['Host'])
-				ui.HostName.setText(button._associated_ssh_host['HostName'])
-				ui.User.setText(button._associated_ssh_host['User'])
-				ui.Port.setText(button._associated_ssh_host['Port'])
-				ui.IdentityFile.setText(button._associated_ssh_host['IdentityFile'])
-				break
+
+		button = self.get_checkedButton()
+
+		ui.Name.setText(button._associated_ssh_host['Host'])
+		ui.HostName.setText(button._associated_ssh_host['HostName'])
+		ui.User.setText(button._associated_ssh_host['User'])
+		ui.Port.setText(button._associated_ssh_host['Port'])
+		ui.IdentityFile.setText(button._associated_ssh_host['IdentityFile'])
 
 		if editHost.exec_():
 			button._associated_ssh_host['Host'] = str(ui.Name.text())
@@ -73,12 +78,14 @@ class PySSHGui(QMainWindow, pySSHGui_ui.Ui_MainWindow):
 
 	def on_removeButton_clicked(self, b):
 		print "Clicked remove button"
-		for button in self.hostRadioButtons:
-			if button.isChecked():
-				self.ssh_config.hosts.remove(button._associated_ssh_host)
-				self.hostsLayout.removeWidget(button)
-				self.hostRadioButtons.remove(button)
-				button.setParent(None)
+
+		button = self.get_checkedButton()
+
+		self.ssh_config.hosts.remove(button._associated_ssh_host)
+		self.hostsLayout.removeWidget(button)
+		self.hostRadioButtons.remove(button)
+		button.setParent(None)
+
 		self.ssh_config.save()
 
 	def on_connectButton_clicked(self, b):
