@@ -33,7 +33,7 @@ class PySSHGui(QMainWindow, pySSHGui_ui.Ui_MainWindow):
 				return button
 		return None
 
-	def on_newButton_clicked(self, b):
+	def on_actionNew_triggered(self, b):
 		editHost = QDialog()
 		ui = editHost_ui.Ui_editHost()
 		ui.setupUi(editHost)
@@ -52,7 +52,7 @@ class PySSHGui(QMainWindow, pySSHGui_ui.Ui_MainWindow):
 
 		print "Clicked new button"
 
-	def on_editButton_clicked(self, b):
+	def on_actionEdit_triggered(self, b):
 		editHost = QDialog()
 		ui = editHost_ui.Ui_editHost()
 		ui.setupUi(editHost)
@@ -76,7 +76,7 @@ class PySSHGui(QMainWindow, pySSHGui_ui.Ui_MainWindow):
 		self.ssh_config.save()
 		print "Clicked edit button"
 
-	def on_removeButton_clicked(self, b):
+	def on_actionRemove_triggered(self, b):
 		print "Clicked remove button"
 
 		button = self.get_checkedButton()
