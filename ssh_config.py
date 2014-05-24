@@ -5,22 +5,23 @@ class SSH_Config:
 	@staticmethod
 	def split_ssh_config_content(ssh_config_content):
 		hosts = list()
-		host = None
+		empty_host = {'User' : 'user', 'Port' : '22', 'IdentityFile' : '~/.ssh/id_rsa'}
+		host = empty_host.copy()
 		for param in ssh_config_content:
 			try:
 				(key, value) = param.split()
-				if not host:
-					host = {key: value}
+				if not 'Host' in host:
+					host[key] = value
 				elif key not in ("Host", "Match"):
 					host[key] = value
 				else:
 					hosts.append(host)
-					host = None
+					host = empty_host.copy()
 			except:
-				if host:
+				if 'Host' in host:
 					hosts.append(host)
-					host = None
-		if host:
+					host = empty_host.copy()
+		if 'Host' in host:
 			hosts.append(host)
 
 		return hosts
