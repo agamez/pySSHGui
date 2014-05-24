@@ -2,6 +2,7 @@
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 import pySSHGui_ui
+import editHost_ui
 from ssh_config import SSH_Config
 
 import sys
@@ -28,6 +29,22 @@ class PySSHGui(QMainWindow, pySSHGui_ui.Ui_MainWindow):
 
 
 	def on_newButton_clicked(self, b):
+		editHost = QDialog()
+		ui = editHost_ui.Ui_editHost()
+		ui.setupUi(editHost)
+		editHost.setWindowTitle('New host')
+		if editHost.exec_():
+			new_host = {'Host' : str(ui.Name.text()),
+				    'HostName' : str(ui.HostName.text()),
+				    'User' : str(ui.User.text()),
+				    'Port' : str(ui.Port.text()),
+				    'IdentityFile' : str(ui.IdentityFile.text())
+				    }
+			print new_host
+			self.ssh_config.hosts.append(new_host)
+			self.ssh_config.save()
+			self.addHost(new_host)
+
 		print "Clicked new button"
 
 	def on_editButton_clicked(self, b):
